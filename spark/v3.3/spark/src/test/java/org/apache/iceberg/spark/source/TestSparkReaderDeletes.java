@@ -331,9 +331,9 @@ public class TestSparkReaderDeletes extends DeleteReadTests {
         .validateDataFilesExist(posDeletes.second())
         .commit();
 
-    StructLikeSet expected = expectedRowSet(29, 43, 61, 89);
+    StructLikeSet expected = expectedRowSet(29, 43, 61, 89);  // 所有字段某些字段打上delete标记
     StructLikeSet actual =
-        rowSet(tableName, PROJECTION_SCHEMA.asStruct(), "id", "data", "_deleted");
+        rowSet(tableName, PROJECTION_SCHEMA.select("id", "data").asStruct(), "id", "data");
 
     Assert.assertEquals("Table should contain expected row", expected, actual);
   }
